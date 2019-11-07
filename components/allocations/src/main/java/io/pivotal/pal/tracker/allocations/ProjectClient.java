@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ProjectClient {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
     private final Map<Long, ProjectInfo> projectsCache = new ConcurrentHashMap<>();
     private final RestOperations restOperations;
     private final String endpoint;
@@ -23,7 +24,10 @@ public class ProjectClient {
 
     @HystrixCommand(fallbackMethod = "getProjectFromCache")
     public ProjectInfo getProject(long projectId) {
-        ProjectInfo project = restOperations.getForObject(endpoint + "/projects/" + projectId, ProjectInfo.class);
+        String url = endpoint + "/projects/" + projectId;
+        logger.info("get project info.  url={}", url);
+        ProjectInfo project = restOperations.getForObject(url, ProjectInfo.class);
+        logger.info("project={}", project);
 
         projectsCache.put(projectId, project);
 
