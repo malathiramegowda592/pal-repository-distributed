@@ -10,4 +10,5 @@ applications:
     JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
   services:
   - tracker-backlog-database
-  -  tracker-service-registry
+  - tracker-service-registry
+  - tracker-circuit-breaker-dashboard
